@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="day1-input" />
+    <None Remove="day2-input" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="day1-input" />
+    <EmbeddedResource Include="day2-input" />
+  </ItemGroup>
+
+</Project>
