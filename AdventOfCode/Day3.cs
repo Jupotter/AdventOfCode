@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
+using System.Reflection;
 
 namespace AdventOfCode
 {
@@ -34,8 +34,20 @@ namespace AdventOfCode
 
         public static Point operator +(Point first, Point second)
         {
-            return new Point(first.X + second.X, first.Y+second.Y);
+            return new Point(first.X + second.X, first.Y + second.Y);
         }
+
+        public int Distance(Point other)
+        {
+            return Math.Abs(X - other.X) + Math.Abs(Y - other.Y);
+        }
+
+        public int Distance()
+        {
+            return Distance(Zero);
+        }
+
+        public static readonly Point Zero = default;
     }
 
     public class Day3
@@ -44,11 +56,11 @@ namespace AdventOfCode
         {
             var intersections = new List<Point>();
             var lines = new HashSet<Point>();
-            bool first = true;
+            var first = true;
             foreach (var line in instructions)
             {
-                Point current = new Point();
-                foreach (string instruction in line)
+                var current = new Point();
+                foreach (var instruction in line)
                 {
                     var direction = instruction[0];
                     var size = int.Parse(instruction.Substring(1));
@@ -58,44 +70,61 @@ namespace AdventOfCode
                         'D' => new Point(0, -1),
                         'L' => new Point(-1, 0),
                         'R' => new Point(1, 0),
-                        _   => throw new InvalidOperationException()
+                        _ => throw new InvalidOperationException()
                     };
 
-                    for (int i = 0; i < size; i++)
+                    for (var i = 0; i < size; i++)
                     {
                         current += iteration;
                         if (lines.Contains(current) && !first)
-                        {
                             intersections.Add(current);
-                        }
                         else
-                        {
                             lines.Add(current);
-                        }
                     }
                 }
 
                 first = false;
             }
+
             return intersections;
         }
 
         public static Point FindClosestCrossing(IEnumerable<IEnumerable<string>> instructions)
         {
             var intersections = FindIntersections(instructions);
-            return intersections.OrderBy(p => p.X + p.Y).First();
+            return intersections.OrderBy(p => p.Distance()).First();
         }
 
-        public static Point FindClosestCrossing(string instructions)
+        public static Point FindClosestCrossing(IEnumerable<string> instructions)
         {
-            var instructionList = instructions.Split('\n').Select(s => s.Split(','));
+            var instructionList = instructions.Select(s => s.Split(','));
             return FindClosestCrossing(instructionList);
         }
 
-        public static int FindClosestCrossingDistance(string instructions)
+        public static int FindClosestCrossingDistance(IEnumerable<string> instructions)
         {
             var crossing = FindClosestCrossing(instructions);
-            return crossing.X + crossing.Y;
+            return crossing.Distance();
+        }
+
+        public static int Solve()
+        {
+            var inputs = ReadInputs();
+            return FindClosestCrossingDistance(inputs);
+        }
+
+        private static IEnumerable<string> ReadInputs()
+        {
+            using var input = Assembly.GetExecutingAssembly().GetManifestResourceStream("AdventOfCode.day3-input.txt");
+            if (input == null) throw new InvalidOperationException();
+
+            using var sr = new StreamReader(input);
+            while (!sr.EndOfStream)
+            {
+                var line = sr.ReadLine();
+
+                if (line != null) yield return line;
+            }
         }
     }
 }
