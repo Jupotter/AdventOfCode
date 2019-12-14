@@ -13,7 +13,16 @@ namespace AdventOfCode.Tests
         [InlineData(new[] { 1, 1, 1, 4, 99, 5, 6, 0, 99 }, new[] { 30, 1, 1, 4, 2, 5, 6, 0, 99 })]
         public void Day2ProgramsTests(int[] code, int[] expected)
         {
-            IntCode.Execute(code).Should().BeEquivalentTo(expected);
+            IntCode.Execute(code);
+            code.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void InputOutputTest()
+        {
+            int[] program = {3, 0, 4, 0, 99};
+            var outputs = IntCode.Execute(program, new[] {10});
+            outputs.Should().ContainSingle().Which.Should().Be(10);
         }
     }
 }

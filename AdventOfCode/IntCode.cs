@@ -1,33 +1,90 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AdventOfCode
 {
-    public class IntCode
+    public class IntCode : IDisposable
     {
-        public static int[] Execute(IEnumerable<int> program)
+        private readonly int[] program;
+        private readonly IEnumerator<int> inputs;
+        private readonly List<int> outputs = new List<int>();
+
+        private readonly Dictionary<int, Action> operations;
+
+        private int ip = 1;
+
+        public static IEnumerable<int> Execute(int[] program, IEnumerable<int>? inputs = null)
         {
-            var array = program.ToArray();
+            using var intCode = new IntCode(program, inputs);
+            return intCode.Execute();
+        }
 
-            for (var i = 0; i < array.Length; i+= 4)
+        private IntCode(int[] program, IEnumerable<int>? inputs)
+        {
+            this.program = program;
+            this.inputs = inputs?.GetEnumerator() ?? new List<int>().GetEnumerator();
+
+            operations = new Dictionary<int, Action>
             {
-                var opCode = array[i];
-                if (opCode == 99)
-                {
-                    break;
-                }
+                {99, Halt},
+                {1, Add},
+                {2, Multiply},
+                {3, ReadInput},
+                {4, Output}
+            };
+        }
 
-                var op1 = array[array[i + 1]];
-                var op2 = array[array[i + 2]];
-                array[array[i + 3]] = opCode switch
-                {
-                    1 => (op1 + op2),
-                    2 => (op1 * op2),
-                    _ => array[array[i + 3]]
-                };
+        private IEnumerable<int> Execute()
+        {
+            inputs.Reset();
+            outputs.Clear();
+            ip = 0;
+            while (ip >= 0 && ip < program.Length)
+            {
+                operations[program[ip]]();
             }
 
-            return array;
+            return outputs;
+        }
+
+        private void Halt()
+        {
+            ip = -1;
+        }
+
+        private void ReadInput()
+        {
+            inputs.MoveNext();
+            program[program[ip + 1]] = inputs.Current;
+            ip += 2;
+        }
+
+        private void Output()
+        {
+            outputs.Add(program[program[ip + 1]]);
+            ip += 2;
+        }
+
+        private void Add()
+        {
+            var op1 = program[program[ip + 1]];
+            var op2 = program[program[ip + 2]];
+            program[program[ip + 3]] = (op1 + op2);
+            ip += 4;
+        }
+
+        private void Multiply()
+        {
+            var op1 = program[program[ip + 1]];
+            var op2 = program[program[ip + 2]];
+            program[program[ip + 3]] = (op1 * op2);
+            ip += 4;
+        }
+
+        public void Dispose()
+        {
+            inputs?.Dispose();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace AdventOfCode
             inputs[1] = first;
             inputs[2] = second;
             var results = IntCode.Execute(inputs);
-            return results[0];
+            return inputs[0];
         }
 
         private static int[] Inputs => LazyInputs.Value;
