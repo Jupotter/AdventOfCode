@@ -11,31 +11,6 @@ namespace AdventOfCode
 {
     public class Day2
     {
-        public static int[] Execute(IEnumerable<int> program)
-        {
-            var array = program.ToArray();
-
-            for (var i = 0; i < array.Length; i+= 4)
-            {
-                var opCode = array[i];
-                if (opCode == 99)
-                {
-                    break;
-                }
-
-                var op1 = array[array[i + 1]];
-                var op2 = array[array[i + 2]];
-                array[array[i + 3]] = opCode switch
-                {
-                    1 => (op1 + op2),
-                    2 => (op1 * op2),
-                    _ => array[array[i + 3]]
-                };
-            }
-
-            return array;
-        }
-
         // ReSharper disable PossibleMultipleEnumeration
         public static int Solve()
         {
@@ -53,7 +28,7 @@ namespace AdventOfCode
             int[] inputs = (int[])Inputs.Clone();
             inputs[1] = first;
             inputs[2] = second;
-            var results = Execute(inputs);
+            var results = IntCode.Execute(inputs);
             return results[0];
         }
 
