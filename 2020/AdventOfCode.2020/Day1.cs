@@ -1,17 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using AoCHelper;
 
 namespace AdventOfCode2020
 {
-    public class Day1
+    public sealed class Day1 : BaseDay
     {
-        public const int Number = 1;
+
+        private readonly IEnumerable<int> fileInput;
+
+        public Day1()
+        {
+            var       data = new List<int>();
+            using var sr   = new StreamReader(InputFilePath);
+            while (!sr.EndOfStream)
+            {
+                string? line = sr.ReadLine();
+
+                if (line != null)
+                    data.Add(int.Parse(line));
+            }
+
+            fileInput = data;
+        }
 
         public int GetProductOf2020(IEnumerable<int> input)
         {
@@ -38,32 +50,14 @@ namespace AdventOfCode2020
             return results.First();
         }
 
-        public static int Solve()
+        public override string Solve_1()
         {
-            return new Day1().GetProductOf2020(Inputs());
+            return GetProductOf2020(fileInput).ToString();
         }
 
-        public static int SolvePart2()
+        public override string Solve_2()
         {
-            return new Day1().GetProductOf2020_2(Inputs());
-        }
-
-        private static IEnumerable<int> Inputs()
-        {
-            using var input = Assembly.GetExecutingAssembly().GetManifestResourceStream("AdventOfCode2020.day1-input.txt");
-            if (input == null)
-            {
-                throw new InvalidOperationException();
-            }
-
-            using var sr = new StreamReader(input);
-            while (!sr.EndOfStream)
-            {
-                string? line = sr.ReadLine();
-
-                if (line != null)
-                    yield return int.Parse(line);
-            }
+            return GetProductOf2020_2(fileInput).ToString();
         }
     }
 }

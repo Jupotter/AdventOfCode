@@ -8,11 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="day1-input.txt" />
+    <None Update="Inputs\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="day1-input.txt" />
+    <PackageReference Include="AoCHelper" Version="0.10.0" />
   </ItemGroup>
 
 </Project>
