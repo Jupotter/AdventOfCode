@@ -5,6 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>AdventOfCode2020</RootNamespace>
     <Nullable>enable</Nullable>
+    <LangVersion >latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
