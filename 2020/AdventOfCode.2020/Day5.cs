@@ -30,15 +30,13 @@ namespace AdventOfCode2020
         public override string Solve_1()
         {
             return fileInput.Select(GetSeatPosition)
-                            .Select(tuple => GetSeatId(tuple.row, tuple.column))
                             .Max()
                             .ToString();
         }
 
         public override string Solve_2()
         {
-            HashSet<int> seats = new HashSet<int>(fileInput.Select(GetSeatPosition)
-                                                           .Select(tuple => GetSeatId(tuple.row, tuple.column)));
+            HashSet<int> seats = new HashSet<int>(fileInput.Select(GetSeatPosition));
             int i = 0;
             for (; i < 963; i++)
             {
@@ -61,12 +59,7 @@ namespace AdventOfCode2020
             return i.ToString();
         }
 
-        public static int GetSeatId(int row, int column)
-        {
-            return row * 8 + column;
-        }
-
-        public static (int row, int column) GetSeatPosition(string pass)
+        public static int GetSeatPosition(string pass)
         {
             pass = pass.ToUpperInvariant();
             int value = 0;
@@ -88,7 +81,7 @@ namespace AdventOfCode2020
                 }
             }
 
-            return (value / 8, value % 8);
+            return value;
         }
     }
 }
