@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2020", "2020", "{80F78770-8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.2020", "2020\AdventOfCode.2020\AdventOfCode.2020.csproj", "{4256EFE8-9BBA-4967-80A9-B53DF2CE5F84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.2020.Tests", "AdventOfCode.2020.Tests\AdventOfCode.2020.Tests.csproj", "{DD2EF5D9-222E-466D-A36B-5BCA3A4031B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.2020.Tests", "2020\AdventOfCode.2020.Tests\AdventOfCode.2020.Tests.csproj", "{DD2EF5D9-222E-466D-A36B-5BCA3A4031B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
