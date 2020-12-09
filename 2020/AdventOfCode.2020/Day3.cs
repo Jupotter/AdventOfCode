@@ -34,7 +34,10 @@ namespace AdventOfCode2020
         public static bool[,] LoadTrees(string source)
         {
             source = source.Trim();
-            var lines  = source.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            string split = "\n";
+            if (source.Contains('\r'))
+                split = "\r\n";
+            var lines  = source.Split(split);
             var length = lines[0].Length;
             var result = new bool[lines.Length, length];
             for (int i = 0; i < result.GetLength(0); i++)

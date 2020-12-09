@@ -145,7 +145,11 @@ namespace AdventOfCode2020
 
         public static IEnumerable<IDictionary<string, string>> ParsePassports(string source)
         {
-            var passports = source.Split(Environment.NewLine + Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+            string split = "\n\n";
+            if (source.Contains('\r'))
+                split = "\r\n\r\n";
+            var passports = source.Split(split, StringSplitOptions.RemoveEmptyEntries);
 
             var regex = new Regex(@"(\w{3}):((?:#|\w)+)");
             var result = passports.Select(passport =>

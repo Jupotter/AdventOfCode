@@ -38,9 +38,12 @@ namespace AdventOfCode2020
 
         public static int CountAll(string data)
         {
-            var   split = data.Split(Environment.NewLine);
+            string split = "\n";
+            if (data.Contains('\r'))
+                split = "\r\n";
+            var   splitted = data.Split(split);
             int[] count = new int[26];
-            foreach (var line in split)
+            foreach (var line in splitted)
             {
                 foreach (var c in line)
                 {
@@ -53,7 +56,10 @@ namespace AdventOfCode2020
 
         public static IEnumerable<string> SplitData(string source)
         {
-            return source.Trim().Split(Environment.NewLine + Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            string split = "\n\n";
+            if (source.Contains('\r'))
+                split = "\r\n\r\n";
+            return source.Trim().Split(split, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }
