@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-
 namespace AdventOfCode2021;
-using System.Linq;
 
 public class Day01 : BaseDay
 {
