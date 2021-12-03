@@ -1,14 +1,12 @@
-﻿using Xunit;
+﻿namespace AdventOfCode2021.Tests;
 
-namespace AdventOfCode2021.Tests
+public class Day01Test
 {
-    public class Day01Test
+    [Fact]
+    public void GetIncreasesTest()
     {
-        [Fact]
-        public void GetIncreasesTest()
-        {
-            var data = new[]
-                       {
+        var data = new[]
+                   {
                            199,
                             200,
                             208,
@@ -21,16 +19,16 @@ namespace AdventOfCode2021.Tests
                             263
                        };
 
-            var result = Day01.GetIncreases(data);
+        var result = Day01.GetIncreases(data);
 
-            Assert.Equal(7, result);
-        }
+        Assert.Equal(7, result);
+    }
 
-        [Fact]
-        public void GetWindowsTest()
+    [Fact]
+    public void GetWindowsTest()
+    {
+        var data = new[]
         {
-            var data = new[]
-            {
                 199,
                 200,
                 208,
@@ -43,8 +41,8 @@ namespace AdventOfCode2021.Tests
                 263
             };
 
-            var expected = new[]
-            {
+        var expected = new[]
+        {
                 607,
                 618,
                 618,
@@ -55,9 +53,8 @@ namespace AdventOfCode2021.Tests
                 792
             };
 
-            var result = Day01.GetWindows(data);
+        var result = Day01.GetWindows(data);
 
-            Assert.Equal(expected, result);
-        }
+        Assert.Equal(expected, result);
     }
 }
