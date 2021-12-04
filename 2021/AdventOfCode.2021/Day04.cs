@@ -13,6 +13,8 @@ public class Day04 : BaseDay
         using var sr = new StreamReader(InputFilePath);
         
         var numbersLine = sr.ReadLine();
+        System.Diagnostics.Debug.Assert(numbersLine != null);
+
         numbers = numbersLine.Split(',').Select(int.Parse).ToList();
         boards = ParseBoards(sr.ReadToEnd());
     }
