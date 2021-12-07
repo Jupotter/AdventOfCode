@@ -2,7 +2,6 @@
 
 public class Day06 : BaseDay
 {
-
     List<int> _input = new List<int>();
 
     public Day06()
@@ -12,6 +11,7 @@ public class Day06 : BaseDay
 
         _input = File.ReadAllText(InputFilePath).Split(',').Select(int.Parse).ToList();
     }
+
     public static IEnumerable<int> Grow(IEnumerable<int> fishes)
     {
         return fishes.SelectMany(f =>
